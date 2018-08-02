@@ -6,10 +6,11 @@ Created on Aug 1, 2018
 
 from evennia import Command
 from evennia import CmdSet
-import random
+from random import randint
 
 """ -------------------------------- GLOBALS -------------------------------- """
 
+RESOURCE_MIN_CNT = 0
 RESOURCE_MAX_CNT = 100
 
 RESOURCE_RAW_TYPES = 	["Wood", "Iron", "Gold", "Silver", "Water", 
@@ -18,6 +19,15 @@ RESOURCE_RAW_TYPES = 	["Wood", "Iron", "Gold", "Silver", "Water",
 
 RESOURCE_COMPLEX_TYPES = 	["RocketFuel", "CarbonFiber", "Batteries", 
 							"Conductors", "CopperWire"]
+
+RESOURCE_MULTIPLIERS = {
+	"Aquatic":{"Wood":0.0}, 
+	"Frozen":{"Wood":0.0}, 
+	"Oasis":{"Wood":3.0},
+	"Gasious":{"Wood":0.0}, 
+	"Volcanic":{"Wood":0.0}, 
+	"Tech":{}
+}
 
 """ -------------------------------- COMMANDS ------------------------------- """
 
@@ -31,15 +41,21 @@ class PlanetCommandGenerateResources(Command):
 	  Complex Resources: <resource name> (<resource count>), ...
 
 	"""
-	
+
 	key = "generate resources"
 
 	# randomly generates a planets resources
-	def generateResources(self):
+	def generateResources(self, planet_type):
 		resources = {}
 
 		for resourceName in (RESOURCE_COMPLEX_TYPES + RESOURCE_RAW_TYPES):
-			resources[resourceName] = random.randrange(RESOURCE_MAX_CNT)
+			if resourceName in RESOURCE_MULTIPLIERS[planet_type].keys():
+				multiplier = RESOURCE_MULTIPLIERS[planet_type][resourceName]
+			else:
+				multiplier = 1
+
+			resources[resourceName] = 
+					int(multiplier * randint(RESOURCE_MIN_CNT, RESOURCE_MAX_CNT))
 
 		return resources
 
@@ -47,11 +63,12 @@ class PlanetCommandGenerateResources(Command):
 	def displayResources(self, resources):
 		resourcesString = "\nPLANET RESOURCES\n---"
 
-		for resourceType in ["\nRaw Resources: ", "\nComplex Resources"]:
-			resourcesString += resourceType
+		for resourceType in [["\nRaw Resources: ", RESOURCE_RAW_TYPES], 
+							["\nComplex Resources", RESOURCE_COMPLEX_TYPES]]:
+			resourcesString += resourceType[0]
 
 			onLineCnt = 0
-			for resourceName in RESOURCE_RAW_TYPES:
+			for resourceName in resourceType[1]:
 				if onLineCnt % 4 == 3: resourcesString += "\n\t\t"
 				resourcesString += resourceName + " (" + str(resources[resourceName]) + ") "
 				onLineCnt += 1
