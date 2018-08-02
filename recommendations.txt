@@ -1,0 +1,17 @@
+* Planets generate resources
+* Ports trade resources
+* Ships make a profit by buying at low prices and selling at higher
+
+I recommend something like this:
+
+* Create a planet class with a command that generates resources
+* Create a port class that
+ - orbits a specific planet
+ - can check inventory levels of the planet; maybe the port has its own inventory but I’m mostly thinking it’s just a way of 
+ selling stuff from/to the planet
+ - decides a price (can be fixed for now) for goods available from the planet
+ - can offer goods at that price to docked ships
+
+There are a lot of details left out. You haven’t implemented ships yet, does that need to be first? 
+Or can our floating god-like super user just do what a ship does for now? What will the payment be? Generic credits?
+Do those have to be stored on the ship? Is it just a counter or an actual item in storage?
