@@ -19,7 +19,7 @@ class Planet(Object):
         self.cmdset.add(PlanetCmdSet, permanent=True)
 
         self.db.desc = "Planet"
-        self.dp.places = []
+        self.db.places = []
         self.getPlanetType();
 
         self.ndb.resources = {}
@@ -28,5 +28,5 @@ class Planet(Object):
     def getPlanetType(self):
     	self.db.planet_type = PLANET_TYPES[randint(0, len(PLANET_TYPES) - 1)]
 
-    #def at_init(self): # recalled every time the object is reinitialized
+    #def at_init(self): # re-called every time the object is reinitialized
     #	self.cmdset.PlanetCommandGenerateResources()
