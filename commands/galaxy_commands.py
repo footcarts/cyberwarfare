@@ -16,10 +16,10 @@ class GalaxyCommandCreate(Command):
     
     def func(self):
         galaxy = self.obj
-        if self.args:
-            system_count, = self.args
-        else:
-            system_count = 50
+        #if self.args:
+        #    system_count, = self.args
+        #else:
+        system_count = 50
         galaxy.db.system_count = system_count
         degrees = {}
         for i in range(system_count):

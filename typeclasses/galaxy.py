@@ -1,3 +1,6 @@
+# @create/dop myGalaxy:galaxy.Galaxy
+# create myGalaxy
+
 from commands.galaxy_commands import GalaxyCmdSet
 from evennia import DefaultRoom
 

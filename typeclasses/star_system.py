@@ -2,8 +2,10 @@
 
 from evennia import DefaultRoom
 
+STAR_TYPES = ["Yellow"]
+
 class StarSystem(DefaultRoom):
-    STAR_TYPES = ["Yellow"]
+    
     def at_object_creation(self):
         self.db.number = None
         self.db.star_type = None
