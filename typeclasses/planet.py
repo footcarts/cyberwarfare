@@ -24,6 +24,7 @@ class Planet(Object):
         self.cmdset.add(PlanetCmdSet, permanent=True)
 
         self.db.desc = "Planet"
+        self.db.number = None
         self.db.places = []
         self.db.planet_type = None
         self.db.planet_size = None

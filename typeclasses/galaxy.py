@@ -6,8 +6,11 @@ from evennia import DefaultRoom
 
 class Galaxy(DefaultRoom):
     def at_object_creation(self):
+        self.cmdset.add(GalaxyCmdSet, permanent=True)
+        
         self.db.system_count = 0
         self.db.systems = {}
-        self.cmdset.add(GalaxyCmdSet, permanent=True)
+
+        self.execute_cmd("create")
         
     
