@@ -88,6 +88,8 @@ class PlanetCommandGenerateResources(Command):
 
 		planet.ndb.resources = resources
 
+		caller.msg("Planet Created")
+
 class PlanetCommandLookResources(Command):
 	"""
 	Look at Planet Resources

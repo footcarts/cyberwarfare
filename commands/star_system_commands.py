@@ -7,6 +7,8 @@ Created on Aug 1, 2018
 from evennia import Command
 from evennia import CmdSet
 from random import randint
+from evennia import create_object
+from typeclasses.planet import Planet
 
 """ -------------------------------- GLOBALS -------------------------------- """
 
@@ -45,6 +47,8 @@ class StarSystemCommandCreate(Command):
 
 		star_system.db.orbits = planets
 		star_system.db.orbit_count = len(planets)
+
+		caller.msg("Star System Created")
 
 class StarSystemCmdSet(CmdSet):
     key = "starsystemcmdset"
