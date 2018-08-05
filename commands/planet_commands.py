@@ -6,9 +6,18 @@ Created on Aug 1, 2018
 
 from evennia import Command
 from evennia import CmdSet
-from random import randint
+from random import randint, random
 
 """ -------------------------------- GLOBALS -------------------------------- """
+
+PLANET_TYPES = { "Aquatic": 0.2, 
+                "Frozen": 0.15, 
+                "Oasis": 0.2, 
+                "Gasious": 0.15, 
+                "Volcanic": 0.2, 
+                "Tech": 0.1 }
+
+PLANET_SIZES = {"Small": 0.25, "Medium": 0.35, "Large": 0.25, "Massive": 0.15}
 
 RESOURCE_MIN_CNT = 0
 RESOURCE_MAX_CNT = 100
@@ -46,6 +55,44 @@ RESOURCE_MULT_SIZE = {
 
 """ -------------------------------- COMMANDS ------------------------------- """
 
+class PlanetCommandCreate(Command):
+	"""
+	Create Planet
+	"""
+
+	key = "create"
+
+	# randomly decided planet type
+	def getPlanetType(self):
+		randType = random()
+		accType = 0
+
+		for key, value in PLANET_TYPES.items():
+			accType += value
+			if randType < accType: 
+				return key
+		return "Oasis" # default if somehow not set
+
+	# randomly decided planet size
+	def getPlanetSize(self):
+		randSize = random()
+		accSize = 0
+
+		for key, value in PLANET_SIZES.items():
+			accSize += value
+			if randSize < accSize: 
+				return key
+		return "Medium" # default if somehow not set
+
+	def func(self):
+		caller = self.caller
+		planet = self.obj
+
+		planet.db.planet_size = self.getPlanetSize()
+		planet.db.planet_type = self.getPlanetType()
+
+		planet.execute_cmd("generateResources")
+
 class PlanetCommandGenerateResources(Command):
 	"""
 	Generate Planet Resources
@@ -61,10 +108,10 @@ class PlanetCommandGenerateResources(Command):
 	key = "generateResources"
 
 	# randomly generates a planets resources
-	def generateResources(self, planet_type, planet_size):
+	def generateResources(self, desc, planet_type, planet_size):
 		resources = {}
 
-		print "Generating Planet Resources"
+		print "Generating " + desc + " Resources"
 
 		for resourceName in (RESOURCE_COMPLEX_TYPES + RESOURCE_RAW_TYPES):
 			if resourceName in RESOURCE_MULT_TYPE[planet_type].keys():
@@ -82,13 +129,12 @@ class PlanetCommandGenerateResources(Command):
 		planet = self.obj
 		planet_type = planet.db.planet_type
 		planet_size = planet.db.planet_size
+		desc = planet.db.desc
 
 		#if planet.ndb.resources == {}: # generate resources if they havent been generated yet
-		resources = self.generateResources(planet_type, planet_size)
+		planet.db.resources = self.generateResources(desc, planet_type, planet_size)
 
-		planet.ndb.resources = resources
-
-		caller.msg("Planet Created")
+		print "Planet Resources Generated"
 
 class PlanetCommandLookResources(Command):
 	"""
@@ -128,7 +174,7 @@ class PlanetCommandLookResources(Command):
 		planet = self.obj
 		planet_type = planet.db.planet_type
 		planet_size = planet.db.planet_size
-		resources = planet.ndb.resources
+		resources = planet.db.resources
 
 		resourcesString = self.displayResources(resources, planet_type, planet_size)
 
@@ -138,5 +184,6 @@ class PlanetCmdSet(CmdSet):
     key = "planetcmdset"
 
     def at_cmdset_creation(self):     
+        self.add(PlanetCommandCreate())
         self.add(PlanetCommandGenerateResources())
         self.add(PlanetCommandLookResources())

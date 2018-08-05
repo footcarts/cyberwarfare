@@ -9,13 +9,6 @@ Created on Aug 1, 2018
 
 from objects import Object
 from commands.planet_commands import PlanetCmdSet
-from random import randint
-
-""" -------------------------------- GLOBALS -------------------------------- """
-
-PLANET_TYPES = ["Aquatic", "Frozen", "Oasis", "Gasious", "Volcanic", "Tech"]
-
-PLANET_SIZES = ["Small", "Medium", "Large", "Massive"]
 
 """ --------------------------------- OBJECT -------------------------------- """
 
@@ -24,20 +17,15 @@ class Planet(Object):
         self.cmdset.add(PlanetCmdSet, permanent=True)
 
         self.db.desc = "Planet"
-        self.db.number = None
+        self.db.number = -1
         self.db.places = []
-        self.db.planet_type = None
-        self.db.planet_size = None
+        self.db.planet_type = ""
+        self.db.planet_size = ""
 
-        self.ndb.resources = {}
+        self.db.resources = {}
         
-        self.getPlanetType()
+        self.execute_cmd("create")
 
-    # randomly decided planet type
-    def getPlanetType(self):
-    	self.db.planet_type = PLANET_TYPES[randint(0, len(PLANET_TYPES) - 1)]
-    	self.db.planet_size = PLANET_SIZES[randint(0, len(PLANET_SIZES) - 1)]
-
-    # generates new resources at at restart
+     # generates new resources at at restart
     def at_init(self):
-    	self.execute_cmd("generateResources")
+        self.execute_cmd("generateResources")
