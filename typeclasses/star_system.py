@@ -12,7 +12,7 @@ class StarSystem(DefaultRoom):
         self.cmdset.add(StarSystemCmdSet, permanent=True)
 
         self.db.number = None
-        self.db.star_type = None
+        self.db.stars = []
         self.db.dsport = None
         self.db.orbits = []
         self.db.orbit_count = 0

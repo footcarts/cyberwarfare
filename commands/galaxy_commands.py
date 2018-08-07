@@ -19,7 +19,7 @@ class GalaxyCommandCreate(Command):
         if self.args:
             system_count = self.args[0]
         else:
-            system_count = 50
+            system_count = 10
         galaxy.db.system_count = system_count
         degrees = {}
         for i in range(system_count):
@@ -101,9 +101,6 @@ class GalaxyCommandCreate(Command):
 
 
 class GalaxyCmdSet(CmdSet):
-    """
-    This allows mechs to do do mech stuff.
-    """
     key = "galaxycmdset"
 
     def at_cmdset_creation(self):
