@@ -12,4 +12,7 @@ class Port(Object):
         self.cmdset.add(PortCmdSet, permanent=True)
 
         self.db.desc = "Port"
-        self.db.orbiting_planet = None
+        self.db.planet = None
+        self.db.prices = {}
+
+        self.execute_cmd("createPort")

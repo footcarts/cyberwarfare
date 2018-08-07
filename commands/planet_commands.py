@@ -60,7 +60,7 @@ class PlanetCommandCreate(Command):
 	Create Planet
 	"""
 
-	key = "create"
+	key = "createPlanet"
 
 	# randomly decided planet type
 	def getPlanetType(self):
@@ -91,7 +91,10 @@ class PlanetCommandCreate(Command):
 		planet.db.planet_size = self.getPlanetSize()
 		planet.db.planet_type = self.getPlanetType()
 
-		planet.execute_cmd("generateResources")
+		planet.execute_cmd("generatePlanet")
+
+
+		print "Planet Created"
 
 class PlanetCommandGenerateResources(Command):
 	"""
@@ -105,7 +108,7 @@ class PlanetCommandGenerateResources(Command):
 
 	"""
 
-	key = "generateResources"
+	key = "generatePlanet"
 
 	# randomly generates a planets resources
 	def generateResources(self, desc, planet_type, planet_size):
@@ -134,7 +137,7 @@ class PlanetCommandGenerateResources(Command):
 		#if planet.ndb.resources == {}: # generate resources if they havent been generated yet
 		planet.db.resources = self.generateResources(desc, planet_type, planet_size)
 
-		print "Planet Resources Generated"
+		print desc + " Resources Generated"
 
 class PlanetCommandLookResources(Command):
 	"""
@@ -148,7 +151,7 @@ class PlanetCommandLookResources(Command):
 
 	"""
 
-	key = "lookResources"
+	key = "lookPlanet"
 
 	# returns a string representation of the planets resources
 	def displayResources(self, resources, planet_type, planet_size):

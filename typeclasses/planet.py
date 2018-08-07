@@ -21,11 +21,12 @@ class Planet(Object):
         self.db.places = []
         self.db.planet_type = ""
         self.db.planet_size = ""
+        self.db.port = None
 
         self.db.resources = {}
         
-        self.execute_cmd("create")
+        self.execute_cmd("createPlanet")
 
      # generates new resources at at restart
     def at_init(self):
-        self.execute_cmd("generateResources")
+        self.execute_cmd("generatePlanet")

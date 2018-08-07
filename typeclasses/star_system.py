@@ -3,11 +3,6 @@
 from evennia import DefaultRoom
 from objects import Object
 from commands.star_system_commands import StarSystemCmdSet
-from random import randint
-
-""" -------------------------------- GLOBALS -------------------------------- """
-
-STAR_TYPES = ["Yellow", "Brown"]
 
 """ --------------------------------- OBJECT -------------------------------- """
 
@@ -23,11 +18,7 @@ class StarSystem(DefaultRoom):
         self.db.orbit_count = 0
         self.db.desc = "Unconfigured Star Sector"
 
-        self.getStarType()
-        self.execute_cmd("create")
-
-    def getStarType(self):
-        self.db.star_type = STAR_TYPES[randint(0, len(STAR_TYPES) - 1)]
+        self.execute_cmd("createStarSystem")
         
     def at_object_receive(self, moved_obj, source_location, **kwargs):
         # todo: add to ports, orbits, etc
