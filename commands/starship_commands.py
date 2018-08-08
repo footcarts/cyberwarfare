@@ -70,13 +70,44 @@ class StarShipCommandScan(Command):
         else:
             caller.msg("No long Range Scanners Aboard!")
 			
+class StarshipCommandInventory(Command):
+    """
+    Display Starship Inventory
+    """
+
+    key = "inventory"
+
+    def func(self):
+        starship = self.obj
+
+class StarshipCommandSell(Command):
+    """
+    Sell Item to Port
+    """
+
+    key = "sell"
+
+    def func(self):
+        starship = self.obj
+        port = self.obj.location # check if in port
+
+class StarshipCommandBuy(Command):
+    """
+    Buy Item from Port
+    """
+
+    key = "buy"
+
+    def func(self):
+        starship = self.obj
+        port = self.obj.location # check if in port
 			
 class StarshipCmdSet(CmdSet):
-    """
-    This allows mechs to do do mech stuff.
-    """
     key = "starshipcmdset"
 
     def at_cmdset_creation(self):
         "Called once, when cmdset is first created"        
         self.add(StarShipCommandScan())
+        self.add(StarshipCommandInventory())
+        self.add(StarshipCommandBuy())
+        self.add(StarshipCommandSell())

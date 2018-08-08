@@ -29,4 +29,4 @@ class Planet(Object):
 
      # generates new resources at at restart
     def at_init(self):
-        self.execute_cmd("generatePlanet")
+        self.execute_cmd("generate")

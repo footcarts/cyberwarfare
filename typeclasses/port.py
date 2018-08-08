@@ -14,5 +14,6 @@ class Port(Object):
         self.db.desc = "Port"
         self.db.planet = None
         self.db.prices = {}
+        self.db.sell_ratio = 1
 
         self.execute_cmd("createPort")
